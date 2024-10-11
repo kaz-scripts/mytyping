@@ -1,3 +1,6 @@
+const n = 25;
+const accuracy = 1;
+
 function getKey() {
     const inputs = document.querySelectorAll(".mtjNowInput");
     if (inputs.length > 1) {
@@ -12,7 +15,18 @@ function press(key) {
     document.dispatchEvent(event);
 }
 
-setInterval(() => {
-    const key = getKey();
-    if (key) press(key);
-}, 0);
+function main() {
+	setInterval(() => {
+		if (Math.random() <= accuracy) {
+			const key = getKey();
+			if (key) press(key);
+		}
+		else {
+			press('_');
+		}
+	});
+}
+
+for (let i = 1; i <= n; i++) {
+    main();
+}
