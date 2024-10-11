@@ -86,3 +86,5 @@ accuracyInput.addEventListener("input", () => {
     stop()
     start(parseFloat(speedInput.value), parseFloat(accuracyInput.value));
 });
+
+setTimeout(stop,100);
