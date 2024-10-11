@@ -1,6 +1,6 @@
-const accuracy = 0.99;
-const speed = 17;
-const n = speed / 250 + 15;
+const accuracy = 0.93;
+const speed = 2.5;
+const n = Math.ceil(speed / 250);
 
 function getKey() {
     const inputs = document.querySelectorAll(".mtjNowInput");
@@ -14,12 +14,12 @@ function press(key) {
 
 function main() {
     setInterval(() => {
-        if (Math.random() >= accuracy) press('_');
+        if (Math.random() > accuracy) press('_');
         const key = getKey();
         if (key) press(key);
     }, 1000 / speed * n);
 }
 
 for (let i = 1; i <= n; i++) {
-    setTimeout(() => { main(); }, 1000 / n * i);
+    setTimeout(main, 1000 / (n + 1) * i - 1);
 }
