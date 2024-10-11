@@ -2,7 +2,7 @@ const n = 25;
 const accuracy = 1;
 
 function getKey() {
-    const inputs = document.querySelectorAll(".mtjNowInput");
+    const inputs = document.getElementsByClassName("mtjNowInput");
     if (inputs.length > 1) {
         return inputs[1].textContent;
     } else {
