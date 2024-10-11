@@ -1,32 +1,25 @@
-const n = 25;
-const accuracy = 1;
+const accuracy = 0.99;
+const speed = 17;
+const n = speed / 250 + 15;
 
 function getKey() {
-    const inputs = document.getElementsByClassName("mtjNowInput");
-    if (inputs.length > 1) {
-        return inputs[1].textContent;
-    } else {
-        return false;
-    }
+    const inputs = document.querySelectorAll(".mtjNowInput");
+    return inputs.length > 1 ? inputs[1].textContent : false;
 }
 
 function press(key) {
-    const event = new KeyboardEvent('keydown', {key: key, bubbles: true});
-    document.dispatchEvent(event);
+    const down = new KeyboardEvent('keydown', { key: key, bubbles: true });
+    document.dispatchEvent(down);
 }
 
 function main() {
-	setInterval(() => {
-		if (Math.random() <= accuracy) {
-			const key = getKey();
-			if (key) press(key);
-		}
-		else {
-			press('_');
-		}
-	});
+    setInterval(() => {
+        if (Math.random() >= accuracy) press('_');
+        const key = getKey();
+        if (key) press(key);
+    }, 1000 / speed * n);
 }
 
 for (let i = 1; i <= n; i++) {
-    main();
+    setTimeout(() => { main(); }, 1000 / n * i);
 }
