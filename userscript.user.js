@@ -10,6 +10,7 @@
 // ==/UserScript==
 
 function start(speed, accuracy) {
+    while (loops.length > 0) clearInterval(loops.shift());
     const game = document.getElementById("mtjAutoArea");
     const n = Math.ceil(speed / 250);
     function getKey() {
