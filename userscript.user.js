@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         mytyping hack
 // @namespace    http://tampermonkey.net/
-// @version      2024-10-11
+// @version      2025-01-21
 // @description  lazy
 // @author       wakka
 // @match        https://typing.twi1.me/game/*
@@ -13,22 +13,30 @@ function start(speed, accuracy) {
     while (loops.length > 0) clearInterval(loops.shift());
     const game = document.getElementById("mtjAutoArea");
     const n = Math.ceil(speed / 250);
+
     function getKey() {
         const inputs = document.querySelectorAll(".mtjNowInput");
         return inputs.length > 1 ? inputs[1].textContent : false;
     }
 
     function press(key) {
-        const down = new KeyboardEvent('keydown', { key: key, bubbles: true });
+        const down = new KeyboardEvent('keydown', {
+            key: key,
+            bubbles: true
+        });
         game.dispatchEvent(down);
     }
 
     function main() {
+        let counter = 0;
+        const threshold = Math.round(accuracy * 100);
+
         loops.push(setInterval(() => {
-            if (Math.random() > accuracy) press('_');
+            counter = (counter + 1) % 100;
+            if (counter >= threshold) press('_');
             const key = getKey();
             if (key) press(key);
-        }, 1000 / speed * n))
+        }, 1000 / speed * n));
     }
 
     for (let i = 1; i <= n; i++) {
@@ -88,4 +96,4 @@ accuracyInput.addEventListener("input", () => {
     start(parseFloat(speedInput.value), parseFloat(accuracyInput.value));
 });
 
-setTimeout(stop,100);
+setTimeout(stop, 100);
